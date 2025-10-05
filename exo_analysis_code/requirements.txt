@@ -1,0 +1,14 @@
+# Core numerics & data
+numpy==1.26.4
+pandas==2.2.2
+scipy==1.13.1
+
+# Modeling
+scikit-learn==1.4.2
+joblib==1.4.2
+
+# Plotting
+matplotlib==3.8.4
+
+# Imaging (for optional AI-generated image watermarking utility)
+pillow==10.3.0
