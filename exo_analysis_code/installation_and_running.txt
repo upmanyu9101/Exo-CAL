@@ -1,0 +1,145 @@
+INSTALL_AND_RUN.txt
+
+1) Prerequisites
+
+Python 3.9–3.12 installed (python --version)
+
+Git (optional, for cloning)
+
+Disk space: ~1–2 GB for outputs
+
+CSV input files:
+
+TOI (TESS): includes columns like toi, tfopwg_disp, pl_orbper, pl_trandurh, pl_trandep, pl_rade, st_teff, st_rad, etc.
+
+KOI (Kepler): includes columns like kepoi_name, koi_disposition, koi_period, koi_duration, koi_depth, koi_prad, koi_steff, koi_srad, etc.
+
+K2: includes columns like pl_name (or EPIC id), disposition, pl_orbper, pl_trandurh, pl_trandep, pl_rade, st_teff, st_rad, etc.
+
+Remove/keep header comments starting with # — the script auto-skips them.
+
+Tip: If using Windows paths with backslashes, put them in quotes as shown below.
+
+2) Create and activate a virtual environment
+Windows (PowerShell)
+# from repository root
+python -m venv .venv
+. .\.venv\Scripts\Activate.ps1
+
+macOS / Linux (bash or zsh)
+python3 -m venv .venv
+source .venv/bin/activate
+
+3) Install dependencies
+pip install -U pip
+pip install -r requirements.txt
+
+4) Run the analysis
+
+The main entrypoint is exo_analysis.py. Basic usage:
+
+python exo_analysis.py --toi "<PATH_TO_TOI_CSV>" --koi "<PATH_TO_KOI_CSV>" --k2 "<PATH_TO_K2_CSV>" --out "<OUTPUT_DIR>"
+
+Examples
+Windows (PowerShell)
+python .\exo_analysis.py `
+  --toi "C:\data\toi.csv" `
+  --koi "C:\data\koi.csv" `
+  --k2  "C:\data\k2.csv" `
+  --out "C:\MATLAB\TOI_analysis\out"
+
+macOS / Linux
+python exo_analysis.py \
+  --toi "/data/toi.csv" \
+  --koi "/data/koi.csv" \
+  --k2  "/data/k2.csv" \
+  --out "/Users/<you>/ExoRuns/out"
+
+Run a single dataset only
+# TOI only
+python exo_analysis.py --toi "<PATH>\toi.csv" --out "<OUTPUT_DIR>"
+
+# KOI only
+python exo_analysis.py --koi "<PATH>\koi.csv" --out "<OUTPUT_DIR>"
+
+# K2 only
+python exo_analysis.py --k2  "<PATH>\k2.csv"  --out "<OUTPUT_DIR>"
+
+Work on a small subset (smoke test)
+python exo_analysis.py --toi "<PATH>\toi.csv" --koi "<PATH>\koi.csv" --k2 "<PATH>\k2.csv" --out "<OUTPUT_DIR>" --limit-targets 5
+
+Reproducibility
+python exo_analysis.py --toi ... --koi ... --k2 ... --out ... --seed 42
+
+Quiet mode (less console output)
+python exo_analysis.py --toi ... --out ... --quiet
+
+5) What you’ll get (per dataset)
+
+<OUTPUT_DIR>/<DATASET>/
+
+dataset_predictions.csv – all targets with predicted probability, entropy, margin, calibrated probability, and reasoning fields.
+
+top_candidates.csv – highest probability candidates (sorted).
+
+active_learning_queue.csv – “uncertain” cases (high entropy or near decision boundary) to inspect next.
+
+threshold_table.csv – operating thresholds with estimated precision/recall trade-offs.
+
+feature_importance.csv – global feature importance and stability.
+
+perf.csv – cross-validated ROC-AUC, PR-AUC, and reliability summary (when labels exist).
+
+fig/ – figures:
+
+roc.png, pr.png, reliability.png (if labels exist)
+
+pca_dataset.png – PCA scatter of feature space
+
+targets/<designation>/ – per-target report folders with:
+
+report.json – detailed JSON for that target (probability, Monte-Carlo distribution, top contributing features, physics summary)
+
+report.png – compact PDF-like figure (feature z-scores, contribution proxy, MC histogram, PCA neighborhood proxy)
+
+6) Opening the dashboards/figures
+
+Browse to <OUTPUT_DIR>/<DATASET>/fig/ to view dataset-level figures.
+
+Browse to <OUTPUT_DIR>/<DATASET>/targets/ and open any target’s report.png.
+
+7) Common issues & fixes
+
+Path quoting (Windows): Always wrap Windows paths in double quotes. Use backticks ` for line continuation in PowerShell (see example).
+
+NaN in inputs: The program imputes missing values internally. If you still see warnings, verify column names match the dataset dictionaries. The script accepts both original NASA headers and MATLAB-sanitized headers.
+
+KOI has only positives: The script auto-falls back to one-class style scoring (calibrated distance to positive centroid + isotonic scaling). This is expected because many KOI files only include “CANDIDATE”.
+
+Matplotlib backend issues: In headless servers, set MPLBACKEND=Agg before running:
+
+export MPLBACKEND=Agg        # macOS/Linux
+$env:MPLBACKEND="Agg"        # Windows PowerShell
+
+8) Re-running from scratch
+
+If you want a clean run:
+
+Delete your <OUTPUT_DIR> folder.
+
+Re-run the command in Section 4.
+
+9) Deactivate the virtual environment (optional)
+deactivate
+
+10) Contact / Questions
+
+If something fails, copy the exact command and the last 30 lines of console output into an issue on the repository. Include:
+
+OS and Python version
+
+pip list inside the venv
+
+A small (sanitized) sample of the first 3 rows of your CSV
+
+That’s it—happy hunting!
