@@ -1,0 +1,30 @@
+<!doctype html><html><head><meta charset="utf-8">
+    <title>TOI results</title>
+    <style>
+    body{font-family:system-ui,Segoe UI,Arial; margin:18px; background:#0b0e12; color:#dfe8f3}
+    a{color:#8bd3ff} .row{display:flex; gap:18px; flex-wrap:wrap}
+    .card{background:#151a23; padding:12px; border-radius:10px}
+    img{max-width:520px; height:auto; border-radius:8px; background:#10141b}
+    </style></head><body>
+    <h2>TOI results</h2>
+    <div class="row">
+      <div class="card"><img src="fig/roc.png"><br>ROC</div>
+      <div class="card"><img src="fig/pr.png"><br>Precision–Recall</div>
+      <div class="card"><img src="fig/reliability.png"><br>Reliability</div>
+      <div class="card"><img src="fig/pca_dataset.png"><br>PCA (dataset)</div>
+    </div>
+    <p>
+      <a href="dataset_predictions.csv">dataset_predictions.csv</a> ·
+      <a href="threshold_table.csv">threshold_table.csv</a> ·
+      <a href="feature_importance.csv">feature_importance.csv</a> ·
+      <a href="active_learning_queue.csv">active_learning_queue.csv</a> ·
+      <a href="top_candidates.csv">top_candidates.csv</a> ·
+      <a href="perf.csv">perf.csv</a>
+    </p>
+    <h3>Key metrics</h3>
+    <pre>{
+  "cv_auc_roc": 0.7841399664651033,
+  "cv_auc_pr": 0.9306124262380937,
+  "ece": 0.07278595889391258
+}</pre>
+    </body></html>
