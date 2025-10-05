@@ -15,18 +15,22 @@ EXOCAL reads NASA Exoplanet Archive tables (TOI, KOI, K2) and outputs calibrated
 
 ## Technical Approach
 
+
+## Technical Approach
+
 ### Physics-Informed Features
-Derives dimensionless, scale-stable features from transit geometry and radiative scaling [attached_file:1]:
-- **Depth fraction**: \(f_d = \frac{\text{depth (ppm)}}{10^6}\)
-- **Radius ratio**: \(\frac{R_p}{R_\star} \approx \sqrt{f_d}\)
-- **Scaled semi-major axis**: \(\frac{a}{R_\star} \propto \frac{P^{2/3}}{R_\star M_\star^{1/3}}\)
-- **Equilibrium temperature**: \(T_{eq} \approx T_{eff}\sqrt{\frac{1}{2}}\sqrt{\frac{R_\star}{a}}\)
+Derives dimensionless, scale-stable features from transit geometry and radiative scaling:
+- **Depth fraction**: Transit depth normalized to parts per million
+- **Radius ratio**: Planet-to-star radius relationship from transit depth
+- **Scaled semi-major axis**: Orbital distance scaled by stellar radius
+- **Equilibrium temperature**: Planet temperature from stellar flux and orbital distance
 - Plus magnitudes, SNR proxies, impact parameters, and quality flags
 
 ### Learning Regimes
 - **Supervised** (TOI): Standard classification with labeled positives/negatives
 - **Positive-Only** (KOI): One-class approach using synthetic background and internal calibration
-- **PU Bagging**: Optional ensemble method for datasets with unlabeled samples [attached_file:1]
+- **PU Bagging**: Optional ensemble method for datasets with unlabeled samples
+
 
 ### Calibrated Ensemble
 Stacked classifier using Logistic Regression, Histogram Gradient Boosting, Random Forest, and SVM with Platt or Isotonic calibration for reliable probability outputs [attached_file:1].
@@ -59,12 +63,12 @@ Developed for the **"A World Away: Hunting for Exoplanets with AI"** challenge.
 
 ## Repository Structure
 
-Exo-CAL/
-├── exocal/ # Core ML pipeline
-├── data/ # NASA archive processing
-├── notebooks/ # Analysis and validation
-├── docs/ # Technical documentation
-└── outputs/ # Results and dashboards
+    Exo-CAL/
+    ├── exocal/                 # Core ML pipeline
+    ├── data/                   # NASA archive processing
+    ├── notebooks/              # Analysis and validation
+    ├── docs/                   # Technical documentation
+    └── outputs/                # Results and dashboards
 
 
 ---
