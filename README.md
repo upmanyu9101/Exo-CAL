@@ -13,6 +13,9 @@ EXOCAL reads NASA Exoplanet Archive tables (TOI, KOI, K2) and outputs calibrated
 
 **Pipeline**: Physics-derived features → robust scaling → stacked ensemble (Logistic Regression + Gradient Boosting) → probability calibration → per-target diagnostics (uncertainty + local explanations).
 
+#[**Try it out!**](https://www.exocal.earth)
+
+
 ## Technical Approach
 
 
