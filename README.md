@@ -5,6 +5,8 @@
 
 **A physics-informed, calibrated ML pipeline for reliable exoplanet detection using NASA's open data archives.**
 
+# [**TWebsite Link**](https://www.exocal.earth)
+
 ## Overview
 
 EXOCAL reads NASA Exoplanet Archive tables (TOI, KOI, K2) and outputs calibrated probabilities that candidates are real exoplanets, with uncertainty quantification and explanations. Works even when datasets lack false positives [attached_file:1].
@@ -13,7 +15,7 @@ EXOCAL reads NASA Exoplanet Archive tables (TOI, KOI, K2) and outputs calibrated
 
 **Pipeline**: Physics-derived features → robust scaling → stacked ensemble (Logistic Regression + Gradient Boosting) → probability calibration → per-target diagnostics (uncertainty + local explanations).
 
-# [**Try it out!**](https://www.exocal.earth)
+
 
 
 
