@@ -5,7 +5,7 @@
 
 **A physics-informed, calibrated ML pipeline for reliable exoplanet detection using NASA's open data archives.**
 
-# [**TWebsite Link**](https://www.exocal.earth)
+# [**Website Link**](https://www.exocal.earth)
 
 ## Overview
 
